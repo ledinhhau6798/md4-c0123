@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List of customers</title>
+    <link rel="stylesheet" href="/assets/bootstrap/v-5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets//fontawesome/v-5.15.4/css/all.min.css">
+    <script src="/assets/bootstrap/v-5.3.0/js/bootstrap.bundle.min.js"></script>
+
+    <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <nav class="navbar navbar-expand-lg bg-body-navbar">
+                <div class="container-fluid">
+                    <h1 class="navbar-brand">List of customers</h1>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false"
+                        aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarScroll">
+                        <div class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll"
+                            style="--bs-scroll-height: 100px;">
+
+                        </div>
+                        <form class="d-flex" role="search">
+                            <button class="btn btn-outline-light me-3" type="button">Transfer history</button>
+                            <button class="btn btn-outline-light" type="button" data-bs-toggle="modal"
+                                data-bs-target="#modalCreate">Create</button>
+                        </form>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+        <div class="content">
+            <table id="tblCustomer" class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Full Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Phone</th>
+                        <th scope="col">Balance</th>
+                        <th scope="col">Address</th>
+                        <th scope="col" class="text-center">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- <tr>
+                        <th scope="row">1</th>
+                        <td>Mark Zukerburk</td>
+                        <td>MarkZukerburk@mdo</td>
+                        <td>0909090909</td>
+                        <td>10.000</td>
+                        <td>28 Nguyễn Tri Phương</td>
+                        <td class="text-center">
+                            <button class="btn btn-outline-secondary">
+                                <i class="fa fa-pencil-alt"></i>
+                            </button>
+                            <button class="btn btn-outline-success">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                            <button class="btn btn-outline-warning">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                            <button class="btn btn-outline-primary">
+                                <i class="fas fa-exchange-alt"></i>
+                            </button>
+                            <button class="btn btn-outline-danger">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td>Jacob</td>
+                        <td>Jacob@fat</td>
+                        <td>3456</td>
+                        <td>20.000</td>
+                        <td>29 Hùng Vương</td>
+                        <td class="text-center">
+                            <button class="btn btn-outline-secondary">
+                                <i class="fa fa-pencil-alt"></i>
+                            </button>
+                            <button class="btn btn-outline-success">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                            <button class="btn btn-outline-warning">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                            <button class="btn btn-outline-primary">
+                                <i class="fas fa-exchange-alt"></i>
+                            </button>
+                            <button class="btn btn-outline-danger">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </td>
+                    </tr> -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Modal create -->
+    <div class="modal fade" id="modalCreate" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Modal create customer</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form class="forms-sample" method="post">
+                        <div class="row">
+                            <div class="form-group col-6">
+                                <label for="Full Name">Full Name</label>
+                                <input type="text" class="form-control" id="fullNameCre" name="fullNameCre"
+                                    placeholder="Enter Full Name">
+                            </div>
+                            <div class="form-group col-6">
+                                <label for="Email">Email</label>
+                                <input type="email" class="form-control" id="emailCre" name="emailCre"
+                                    placeholder="Enter Email">
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="form-group col-6">
+                                <label for="Phone">Phone</label>
+                                <input type="tel" class="form-control" id="phoneCre" name="phoneCre"
+                                    placeholder="Enter Phone">
+                            </div>
+                            <div class="form-group col-6">
+                                <label for="Address">Address</label>
+                                <input type="text" class="form-control" id="addressCre" name="addressCre"
+                                    placeholder="Enter Address">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" id="btnCreate" class="btn btn-primary">Create</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Edit -->
+    <div class="modal fade" id="modalEdit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Modal Edit Customer</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form class="form-sample" method="post">
+                        <div class="row">
+                            <div class="form-group col-6">
+                                <label for="Full Name">Full Name</label>
+                                <input type="text" class="form-control" id="fullNameEdit" name="fullNameEdit">
+                            </div>
+                            <div class="form-group col-6">
+                                <label for="Email">Email</label>
+                                <input type="email" class="form-control" id="emailEdit" name="emailEdit">
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="form-group col-6">
+                                <label for="Phone">Phone</label>
+                                <input type="tel" class="form-control" id="phoneEdit" name="phoneEdit">
+                            </div>
+                            <div class="form-group col-6">
+                                <label for="Address">Address</label>
+                                <input type="text" class="form-control" id="addressEdit" name="addressEdit">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="btnEdit">Edit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Deposit -->
+    <div class="modal fade" id="modalDeposit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Modal Deposit Customer</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form class="form-sample" method="post">
+                        <div class="row">
+                            <div class="form-group col-6">
+                                <label for="Full Name">Full Name</label>
+                                <input type="text" class="form-control" id="fullNameDep" name="fullNameDep">
+                            </div>
+                            <div class="form-group col-6">
+                                <label for="Email">Email</label>
+                                <input type="email" class="form-control" id="emailDep" name="emailDep">
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="form-group col-6">
+                                <label for="Deposit">Deposit</label>
+                                <input type="number" class="form-control" id="deposit" name="deposit">
+                            </div>
+                            <div class="form-group col-6">
+                                <label for="Balance">Balance</label>
+                                <input type="number" class="form-control" id="balanceDep" name="balanceDep">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="btnDeposit">Deposit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+     <!-- Modal Withdraw -->
+     <div class="modal fade" id="modalWithdraw" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Modal Withdraw Customer</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form class="form-sample" method="post">
+                        <div class="row">
+                            <div class="form-group col-6">
+                                <label for="Full Name">Full Name</label>
+                                <input type="text" class="form-control" id="fullNameWit" name="fullNameWit">
+                            </div>
+                            <div class="form-group col-6">
+                                <label for="Email">Email</label>
+                                <input type="email" class="form-control" id="emailWit" name="emailWit">
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="form-group col-6">
+                                <label for="Withdraw">Withdraw</label>
+                                <input type="number" class="form-control" id="withdraw" name="withdraw">
+                            </div>
+                            <div class="form-group col-6">
+                                <label for="Balance">Balance</label>
+                                <input type="number" class="form-control" id="balanceWit" name="balanceWit">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="btnWithdraw">Withdraw</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal Transfer -->
+    <div class="modal fade" id="modalTransfer" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Modal Transfer Customer</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form class="form-sample" method="post">
+                        <div class="row">
+                            <div class="form-group col-6">
+                                <label for="Full Name">Full Name</label>
+                                <input type="text" class="form-control" id="fullNameTra" name="fullNameTra">
+                            </div>
+                            <div class="form-group col-6">
+                                <label for="Email">Email</label>
+                                <input type="email" class="form-control" id="emailTra" name="emailTra">
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="form-group col-6">
+                                <label for="Transfer">Transfer</label>
+                                <input type="number" class="form-control" id="transfer" name="transfer">
+                            </div>
+                            <div class="form-group col-6">
+                                <label for="Balance">Balance</label>
+                                <input type="number" class="form-control" id="balanceTra" name="balanceTra">
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="form-group col-6">
+                                <label for="recipientName">Receiver_ID</label>
+                                <select id="recipientName" name="recipientId" class="form-control">
+                                    <th:block th:each="recipient :${recipients}">
+                                        <option th:value="*{recipient.id}" th:text="*{recipient.fullName}"></option>
+                                    </th:block>
+                                </select>
+                            </div>
+                            <div class="form-group col-6">
+                                <label for="Receiver">Balance Receiver</label>
+                                <input type="number" class="form-control" id="receiver" name="receiver">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="btnTransfer">Transfer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <script>
+
+        id = 1;
+        let customers = [
+            {
+                id: id++,
+                fullName: 'Nguyễn Anh Tuấn',
+                email: 'nguyenanhtuan@gmail.com',
+                phone: '2345',
+                balance: 10000,
+                address: '28 Nguyễn Tri Phương'
+            },
+            {
+                id: id++,
+                fullName: 'Liz Kim Cương',
+                email: 'lizkimcuong@show.biz',
+                phone: '6789',
+                balance: 1000000,
+                address: '10 American'
+            },
+            {
+                id: id++,
+                fullName: 'Nguyễn văn A',
+                email: 'lizkimcuong@show.biz',
+                phone: '6789',
+                balance: 4000000,
+                address: '10 American'
+            },
+            {
+                id: id++,
+                fullName: 'Nguyễn văn B',
+                email: 'lizkimcuong@show.biz',
+                phone: '6789',
+                balance: 7000000,
+                address: '10 American'
+            },
+        ]
+
+        console.log(customers);
+
+        const renderCustomer = (obj) => {
+            return `
+                <tr>
+                    <th scope="row">${obj.id}</th>
+                    <td>${obj.fullName}</td>
+                    <td>${obj.email}</td>
+                    <td>${obj.phone}</td>
+                    <td>${obj.balance}</td>
+                    <td>${obj.address}</td>
+                    <td class="text-center">
+                        <button class="btn btn-outline-secondary" type="button"  data-bs-toggle="modal"
+                                data-bs-target="#modalEdit" onclick="findCustomerById(${obj.id})">
+                            <i class="fa fa-pencil-alt"></i>
+                        </button>
+                        <button class="btn btn-outline-success " type="button" onclick="findCustomerByIdDeposit(${obj.id})" data-bs-toggle="modal"
+                                data-bs-target="#modalDeposit">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                        <button class="btn btn-outline-warning" type="button" onclick="findCustomerByIdWithdraw(${obj.id})" data-bs-toggle="modal"
+                                data-bs-target="#modalWithdraw">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                        <button class="btn btn-outline-primary" type="button" onclick="findCustomerByIdTransfer(${obj.id})" data-bs-toggle="modal"
+                                data-bs-target="#modalTransfer" >
+                            <i class="fas fa-exchange-alt"></i>
+                        </button>
+                        <button class="btn btn-outline-danger" onclick="deleteCustomer(${obj.id})" type="button">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </td>
+                </tr>
+            `
+        }
+        
+
+        const getAllCustomers = () => {
+            customers.forEach(item => {
+                const str = renderCustomer(item)
+
+                document.querySelector('#tblCustomer tbody').innerHTML += str
+            })
+        }
+
+        getAllCustomers();
+
+
+        const btnCreate = document.getElementById('btnCreate')
+        btnCreate.addEventListener('click', () => {
+            const fullName = document.getElementById('fullNameCre').value
+            const email = document.getElementById('emailCre').value
+            const phone = document.getElementById('phoneCre').value
+            const address = document.getElementById('addressCre').value
+            const balance = 0
+
+            const obj = {
+                id: id++,
+                fullName: fullName,
+                email: email,
+                phone: phone,
+                balance: balance,
+                address: address
+            }
+
+            customers.push(obj)
+
+            const str = renderCustomer(obj)
+            document.querySelector('#tblCustomer tbody').innerHTML += str
+
+
+        })
+
+        function findCustomerByIdWithdraw(id) {
+
+        const customer = customers.find(c => c.id === id);
+        document.getElementById('fullNameWit').value = customer.fullName;
+        document.getElementById('emailWit').value = customer.email;
+        document.getElementById('withdraw').value = 0;
+        document.getElementById('balanceWit').value = customer.balance;
+
+        document.getElementById('btnWithdraw').onclick = function () {
+            withdrawCustomer(id);
+        };
+
+        function withdrawCustomer(id) {
+            const withdraw = +document.getElementById('withdraw').value;
+            const balance =  +(document.getElementById('balanceWit').value) - withdraw;
+
+            const customer = customers.find(c => c.id === id);
+            if (customer) {
+                customer.balance = balance;
+            }
+
+
+
+
+            const row = document.querySelector(`#tblCustomer tbody tr:nth-child(${id})`);
+            if (row) {
+                row.innerHTML = renderCustomer(customer);
+            }
+            const modalWithdraw = document.getElementById('modalWithdraw');
+            const bootstrapModal = bootstrap.Modal.getInstance(modalWithdraw);
+            bootstrapModal.hide();
+        }
+
+
+        }
+
+        function findCustomerByIdDeposit(id) {
+
+            const customer = customers.find(c => c.id === id);
+            document.getElementById('fullNameDep').value = customer.fullName;
+            document.getElementById('emailDep').value = customer.email;
+            document.getElementById('deposit').value = 0;
+            document.getElementById('balanceDep').value = customer.balance;
+
+            document.getElementById('btnDeposit').onclick = function () {
+                depositCustomer(id);
+            };
+
+            
+        }
+
+        function depositCustomer(id) {
+            const deposit = +document.getElementById('deposit').value;
+            const balance = deposit + +(document.getElementById('balanceDep').value);
+
+            const customer = customers.find(c => c.id === id);
+            if (customer) {
+                customer.balance = balance;
+            }
+
+
+
+
+            const row = document.querySelector(`#tblCustomer tbody tr:nth-child(${id})`);
+            if (row) {
+                row.innerHTML = renderCustomer(customer);
+            }
+            const modalDeposit = document.getElementById('modalDeposit');
+            const bootstrapModal = bootstrap.Modal.getInstance(modalDeposit);
+            bootstrapModal.hide();
+        }
+
+        function findCustomerById(id) {
+            const customer = customers.find(c => c.id === id);
+            if (customer) {
+
+                document.getElementById('fullNameEdit').value = customer.fullName;
+                document.getElementById('emailEdit').value = customer.email;
+                document.getElementById('phoneEdit').value = customer.phone;
+                document.getElementById('addressEdit').value = customer.address;
+
+
+                document.getElementById('btnEdit').onclick = function () {
+                    updateCustomer(id);
+                };
+            }
+        }
+        function updateCustomer(id) {
+            const fullName = document.getElementById('fullNameEdit').value;
+            const email = document.getElementById('emailEdit').value;
+            const phone = document.getElementById('phoneEdit').value;
+            const address = document.getElementById('addressEdit').value;
+
+            const customer = customers.find(c => c.id === id);
+            if (customer) {
+
+                customer.fullName = fullName;
+                customer.email = email;
+                customer.phone = phone;
+                customer.address = address;
+
+
+                const row = document.querySelector(`#tblCustomer tbody tr:nth-child(${id})`);
+                if (row) {
+                    row.innerHTML = renderCustomer(customer);
+                }
+            }
+
+
+            const modalEdit = document.getElementById('modalEdit');
+            const bootstrapModal = bootstrap.Modal.getInstance(modalEdit);
+            bootstrapModal.hide();
+        }
+
+        function deleteCustomer(id) {
+            const index = customers.findIndex(c => c.id === id);
+            if (index !== -1) {
+                customers.splice(index, 1);
+                const row = document.querySelector(`#tblCustomer tbody tr:nth-child(${id})`);
+                if (row) {
+                    row.remove();
+                }
+            }
+        }
+
+    </script>
+
+</body>
+
+</html>
